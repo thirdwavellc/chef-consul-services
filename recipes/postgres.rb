@@ -1,0 +1,17 @@
+#
+# Cookbook Name:: consul-services
+# Recipe:: postgres
+#
+# Copyright (C) 2014
+#
+#
+#
+
+consul_service_def 'postgres' do
+  port 5432
+  check(
+    interval: '10s',
+    script: 'pgrep postgres || exit 2'
+  )
+  notifies :restart, "service[consul]", :delayed
+end
