@@ -19,6 +19,7 @@ suites:
       - recipe[consul-services::mysql]
       - recipe[consul-services::postgres]
       - recipe[consul-services::wordpress]
+      - recipe[consul-services::lsyncd]
     attributes:
       consul:
         service_user: 'root'

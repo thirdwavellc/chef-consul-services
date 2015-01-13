@@ -7,10 +7,8 @@
 #
 #
 
-consul_service_def 'lsyncd' do
-  check(
-    interval: '10s',
-    script: 'pgrep lsyncd || exit 2'
-  )
+consul_check_def 'lsyncd' do
+  interval '10s'
+  script 'pgrep lsyncd || exit 2'
   notifies :restart, "service[consul]", :delayed
 end
