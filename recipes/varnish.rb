@@ -7,7 +7,7 @@
 #
 #
 
-consul_check_def 'varnish' do
+consul_service_def 'varnish' do
   port 6081
   check(
     interval: '10s',
