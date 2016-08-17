@@ -18,8 +18,8 @@
 # limitations under the License.
 #
 
-consul_check_def 'lsyncd' do
-  interval '10s'
-  script 'pgrep lsyncd || exit 2'
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'lsyncd' do
+  type 'check'
+  parameters(interval: '10s', script: 'pgrep lsyncd || exit 2')
+  notifies :restart, "consul_service[consul]", :delayed
 end

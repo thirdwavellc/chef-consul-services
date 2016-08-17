@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'haproxy' do
-  port 80
-  check(
-    interval: '10s',
-    script: 'pgrep haproxy || exit 2'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'haproxy' do
+  type 'service'
+  parameters(port: 80, check: { interval: '10s', script: 'pgrep haproxy || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end

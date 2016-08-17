@@ -18,8 +18,8 @@
 # limitations under the License.
 #
 
-consul_check_def 'consul-alerts' do
-  interval '10s'
-  script 'pgrep consul-alerts || exit 2'
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'consul-alerts' do
+  type 'check'
+  parameters(interval: '10s', script: 'pgrep consul-alerts || exit 2')
+  notifies :restart, "consul_service[consul]", :delayed
 end

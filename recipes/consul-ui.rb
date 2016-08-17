@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'consul-ui' do
-  port 8500
-  check(
-    interval: '10s',
-    script: 'lsof -i :8500 | grep consul || exit 2'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'consul-ui' do
+  type 'service'
+  parameters(port: 8500, check: { interval: '10s', script: 'lsof -i :8500 | grep consul || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end

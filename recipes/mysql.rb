@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'mysql' do
-  port 3306
-  check(
-    interval: '10s',
-    script: 'pgrep mysql || exit 2'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'mysql' do
+  type 'service'
+  parameters(port: 3306, check: { interval: '10s', script: 'pgrep mysql || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end

@@ -18,8 +18,8 @@
 # limitations under the License.
 #
 
-consul_check_def 'dnsmasq' do
-  interval '10s'
-  script 'pgrep dnsmasq || exit 2'
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'dnsmasq' do
+  type 'check'
+  parameters(interval: '10s', script: 'pgrep dnsmasq || exit 2')
+  notifies :restart, "consul_service[consul]", :delayed
 end
