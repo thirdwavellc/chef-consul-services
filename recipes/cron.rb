@@ -18,10 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'cron' do
-  check(
-    interval: '10s',
-    script: 'pgrep cron'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'cron' do
+  type 'service'
+  parameters(check: { interval: '10s', script: 'pgrep cron || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end

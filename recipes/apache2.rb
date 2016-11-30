@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'apache2' do
-  port 80
-  check(
-    interval: '10s',
-    script: 'pgrep apache2 || exit 2'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'apache2' do
+  type 'service'
+  parameters(port: 80, check: { interval: '10s', script: 'pgrep apache2 || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end

@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'varnish' do
-  port 6081
-  check(
-    interval: '10s',
-    script: 'pgrep varnish || exit 2'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'varnish' do
+  type 'service'
+  parameters(port: 6081, check: { interval: '10s', script: 'pgrep varnish || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end

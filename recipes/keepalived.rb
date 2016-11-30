@@ -18,8 +18,8 @@
 # limitations under the License.
 #
 
-consul_check_def 'keepalived' do
-  interval '10s'
-  script 'pgrep keepalived || exit 2'
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'keepalived' do
+  type 'check'
+  parameters(interval: '10s', script: 'pgrep keepalived || exit 2')
+  notifies :restart, "consul_service[consul]", :delayed
 end

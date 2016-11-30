@@ -18,10 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'consul-template' do
-  check(
-    interval: '10s',
-    script: 'pgrep consul-template || exit 2'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'consul-template' do
+  type 'service'
+  parameters(check: { interval: '10s', script: 'pgrep consul-template || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end

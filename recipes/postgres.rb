@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-consul_service_def 'postgres' do
-  port 5432
-  check(
-    interval: '10s',
-    script: 'pgrep postgres || exit 2'
-  )
-  notifies :restart, "service[consul]", :delayed
+consul_definition 'postgres' do
+  type 'service'
+  parameters(port: 5432, check: { interval: '10s', script: 'pgrep postgres || exit 2' })
+  notifies :restart, "consul_service[consul]", :delayed
 end
